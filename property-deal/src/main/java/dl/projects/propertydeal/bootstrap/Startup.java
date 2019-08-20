@@ -1,5 +1,8 @@
 package dl.projects.propertydeal.bootstrap;
 
+import dl.projects.propertydeal.model.City;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -13,24 +16,42 @@ public class Startup implements ApplicationListener<ContextRefreshedEvent>
     @Autowired
     Crawler crawler;
 
+    static Log logger = LogFactory.getLog(Startup.class.getName());
+
 
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        getCityDeals(City.Jerusalem);
-        getCityDeals(City.TLV);
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent)  {
+        for (City c: City.values()){
+        logger.info("Retrieve deal from city of - " + c.toString());
+            boolean isSucceded = getCityDeals(c);
+            if(!isSucceded)
+                return;
+        }
+
     }
 
-    private void getCityDeals(City city) {
-        try
-        {
-           boolean isLastPage = false;
-           int page = 1;
-           while (!isLastPage){
-               isLastPage =  crawler.LoadPostReq(page, city);
-               page++;
-           }
-        } catch (IOException e) {
-            e.printStackTrace();
+    private boolean getCityDeals(City city) {
+        int tries = 3;
+        int page = 1;
+        for (int i = 0 ; i<= tries;i++ ) {
+            try {
+                boolean isLastPage = false;
+
+                while (!isLastPage) {
+                    isLastPage = crawler.LoadPostReq(page, city);
+                    page++;
+                }
+                return true;
+            } catch (IOException e) {
+
+                e.printStackTrace();
+                logger.info("try - "+i+": getCityDeals failed on  - " + city.toString() + " page: " + page + ": " + e.getLocalizedMessage());
+            }
+
+
         }
+        logger.error("getCityDeals failed 3 times"  );
+        return  false;
+
     }
 }

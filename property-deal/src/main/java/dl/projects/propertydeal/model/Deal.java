@@ -8,6 +8,14 @@ public class Deal {
     @SerializedName("KEYVALUE")
     private String id;
 
+    public String getDealDate() {
+        return dealDate;
+    }
+
+    public void setDealDate(String dealDate) {
+        this.dealDate = dealDate;
+    }
+
     @SerializedName("TYPE")
     private Integer type;
 

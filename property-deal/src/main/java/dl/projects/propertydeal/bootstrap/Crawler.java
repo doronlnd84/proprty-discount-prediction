@@ -2,6 +2,7 @@ package dl.projects.propertydeal.bootstrap;
 
 import com.google.gson.Gson;
 
+import dl.projects.propertydeal.model.City;
 import dl.projects.propertydeal.model.DealPage;
 import dl.projects.propertydeal.repositories.DealRepository;
 import org.apache.commons.io.FileUtils;
@@ -39,13 +40,14 @@ public class Crawler {
                 response.append(responseLine.trim());
             }
             String jsonValue = response.toString();
-            FileUtils.writeStringToFile(new File("E:\\temp\\"+page+".json"),jsonValue ,"utf-8");
+            //FileUtils.writeStringToFile(new File("E:\\temp\\"+page+".json"),jsonValue ,"utf-8");
             DealPage data = new Gson().fromJson(jsonValue, DealPage.class);
-            if(data == null){
-            //TO DO throw Exception()
-            }
+//            if(data == null){
+//            //TO DO throw Exception()
+//            }
             dealRepository.saveAll(data.getAllResults());
-            return data.isLastPage();
+            boolean reachedLastYear =  data.getAllResults().stream().anyMatch(x-> x.getDealDate().endsWith("18"));
+            return data.isLastPage() ||  reachedLastYear;
         }
     }
 
