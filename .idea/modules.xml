@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/properties-sales/properties-sales.iml" filepath="$PROJECT_DIR$/properties-sales/properties-sales.iml" />
       <module fileurl="file://$PROJECT_DIR$/property-deal/property-deal.iml" filepath="$PROJECT_DIR$/property-deal/property-deal.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/proprty-discount-prediction.iml" filepath="$PROJECT_DIR$/.idea/proprty-discount-prediction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sale-deal-identity/sale-deal-identity.iml" filepath="$PROJECT_DIR$/sale-deal-identity/sale-deal-identity.iml" />
     </modules>
   </component>
 </project>

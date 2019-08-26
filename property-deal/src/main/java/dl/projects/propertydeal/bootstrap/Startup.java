@@ -21,12 +21,14 @@ public class Startup implements ApplicationListener<ContextRefreshedEvent>
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent)  {
-        for (City c: City.values()){
-        logger.info("Retrieve deal from city of - " + c.toString());
-            boolean isSucceded = getCityDeals(c);
-            if(!isSucceded)
-                return;
-        }
+        crawler.updateCityProperty();
+
+//        for (City c: City.values()){
+//        logger.info("Retrieve deal from city of - " + c.toString());
+//            boolean isSucceded = getCityDeals(c);
+//            if(!isSucceded)
+//                return;
+//        }
 
     }
 
